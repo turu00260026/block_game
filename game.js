@@ -7,6 +7,9 @@ class TetrisGame {
         this.startButton = document.getElementById('startButton');
         this.soundToggle = document.getElementById('soundToggle');
         this.pauseOverlay = document.getElementById('pauseOverlay');
+        this.instructionScreen = document.getElementById('instructionScreen');
+        this.backToTitleBtn = document.getElementById('backToTitleBtn');
+        this.startGameBtn = document.getElementById('startGameBtn');
         
         this.COLS = 10;
         this.ROWS = 20;
@@ -95,13 +98,41 @@ class TetrisGame {
     
     setupStartButton() {
         this.startButton.addEventListener('click', () => {
-            this.startGame();
+            this.showInstructions();
         });
         
         this.startButton.addEventListener('touchstart', (e) => {
             e.preventDefault();
+            this.showInstructions();
+        });
+        
+        this.backToTitleBtn.addEventListener('click', () => {
+            this.showTitle();
+        });
+        
+        this.backToTitleBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.showTitle();
+        });
+        
+        this.startGameBtn.addEventListener('click', () => {
             this.startGame();
         });
+        
+        this.startGameBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            this.startGame();
+        });
+    }
+    
+    showInstructions() {
+        this.titleScreen.style.display = 'none';
+        this.instructionScreen.style.display = 'flex';
+    }
+    
+    showTitle() {
+        this.instructionScreen.style.display = 'none';
+        this.titleScreen.style.display = 'flex';
     }
     
     setupSoundToggle() {
@@ -194,6 +225,7 @@ class TetrisGame {
     
     startGame() {
         this.titleScreen.style.display = 'none';
+        this.instructionScreen.style.display = 'none';
         this.gameStarted = true;
         this.currentPiece = this.createPiece();
         this.updateUI();
