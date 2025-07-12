@@ -10,6 +10,7 @@ class TetrisGame {
         this.instructionScreen = document.getElementById('instructionScreen');
         this.backToTitleBtn = document.getElementById('backToTitleBtn');
         this.startGameBtn = document.getElementById('startGameBtn');
+        this.pauseToggle = document.getElementById('pauseToggle');
         
         this.COLS = 10;
         this.ROWS = 20;
@@ -41,7 +42,7 @@ class TetrisGame {
         this.setupBGM();
         this.setupStartButton();
         this.setupSoundToggle();
-        this.setupPauseControls();
+        this.setupPauseButton();
         
         this.setupControls();
         this.setupTouchControls();
@@ -164,45 +165,20 @@ class TetrisGame {
         }
     }
     
-    setupPauseControls() {
-        // キャンバスクリックで一時停止/再開
-        this.canvas.addEventListener('click', (e) => {
+    setupPauseButton() {
+        this.pauseToggle.addEventListener('click', (e) => {
             if (this.gameStarted) {
                 this.togglePause();
                 e.preventDefault();
+                e.stopPropagation();
             }
         });
         
-        // 一時停止オーバーレイクリックで再開
-        this.pauseOverlay.addEventListener('click', (e) => {
-            if (this.isPaused) {
+        this.pauseToggle.addEventListener('touchstart', (e) => {
+            if (this.gameStarted) {
                 this.togglePause();
                 e.preventDefault();
-            }
-        });
-        
-        // タッチイベント
-        this.canvas.addEventListener('touchstart', (e) => {
-            if (this.gameStarted && e.touches.length === 1) {
-                // 他のタッチ操作と区別するため、短時間のタッチのみ一時停止
-                this.pauseTouchTimer = setTimeout(() => {
-                    this.togglePause();
-                }, 300);
-                // e.preventDefault(); // コメントアウトして他のタッチ操作を阻害しないように
-            }
-        });
-        
-        this.canvas.addEventListener('touchend', (e) => {
-            if (this.pauseTouchTimer) {
-                clearTimeout(this.pauseTouchTimer);
-                this.pauseTouchTimer = null;
-            }
-        });
-        
-        this.canvas.addEventListener('touchmove', (e) => {
-            if (this.pauseTouchTimer) {
-                clearTimeout(this.pauseTouchTimer);
-                this.pauseTouchTimer = null;
+                e.stopPropagation();
             }
         });
     }
@@ -212,11 +188,15 @@ class TetrisGame {
         
         if (this.isPaused) {
             this.pauseOverlay.style.display = 'flex';
+            this.pauseToggle.textContent = '▶️';
+            this.pauseToggle.classList.add('paused');
             if (this.bgm && this.soundEnabled) {
                 this.bgm.pause();
             }
         } else {
             this.pauseOverlay.style.display = 'none';
+            this.pauseToggle.textContent = '⏸️';
+            this.pauseToggle.classList.remove('paused');
             if (this.bgm && this.soundEnabled) {
                 this.bgm.play().catch(e => console.log('BGM再生エラー:', e));
             }
@@ -736,6 +716,8 @@ class TetrisGame {
                     this.softDropping = false;
                     this.isPaused = false;
                     this.pauseOverlay.style.display = 'none';
+                    this.pauseToggle.textContent = '⏸️';
+                    this.pauseToggle.classList.remove('paused');
                     this.updateUI();
                 }
             }

@@ -38,6 +38,12 @@
             color: white;
         }
         
+        .header-controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        
         .score {
             font-size: 18px;
             font-weight: bold;
@@ -87,7 +93,7 @@
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
         
-        .sound-toggle {
+        .sound-toggle, .pause-toggle {
             width: 40px;
             height: 40px;
             background: rgba(255, 255, 255, 0.2);
@@ -103,13 +109,18 @@
             transition: all 0.3s;
         }
         
-        .sound-toggle:hover {
+        .sound-toggle:hover, .pause-toggle:hover {
             background: rgba(255, 255, 255, 0.3);
         }
         
         .sound-toggle.muted {
             background: rgba(255, 0, 0, 0.3);
             border-color: rgba(255, 0, 0, 0.5);
+        }
+        
+        .pause-toggle.paused {
+            background: rgba(255, 255, 0, 0.3);
+            border-color: rgba(255, 255, 0, 0.5);
         }
         
         .pause-overlay {
@@ -321,7 +332,7 @@
                         <span>回転</span>
                     </div>
                     <div class="instruction-item">
-                        <span>画面タップ</span>
+                        <span>⏸️ボタン</span>
                         <span>一時停止</span>
                     </div>
                 </div>
@@ -342,7 +353,10 @@
         
         <div class="game-header">
             <div class="score">スコア: <span id="score">0</span></div>
-            <div class="sound-toggle" id="soundToggle">🔊</div>
+            <div class="header-controls">
+                <div class="pause-toggle" id="pauseToggle">⏸️</div>
+                <div class="sound-toggle" id="soundToggle">🔊</div>
+            </div>
         </div>
         
         <canvas id="gameCanvas" class="game-canvas"></canvas>
@@ -350,7 +364,7 @@
         <div class="pause-overlay" id="pauseOverlay">
             <div class="pause-text">
                 一時停止中<br>
-                <small>タップして再開</small>
+                <small>⏸️ボタンで再開</small>
             </div>
         </div>
         
