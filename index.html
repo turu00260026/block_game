@@ -60,7 +60,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 10;
+            z-index: 20;
         }
         
         .title-image {
@@ -133,7 +133,7 @@
             display: none;
             justify-content: center;
             align-items: center;
-            z-index: 5;
+            z-index: 15;
         }
         
         .pause-text {
@@ -154,7 +154,7 @@
             position: absolute;
             top: 0;
             left: 0;
-            z-index: 10;
+            z-index: 20;
             padding: 20px;
             box-sizing: border-box;
         }
@@ -246,9 +246,6 @@
             width: 100%;
             height: calc(100% - 120px);
             background: #000;
-            image-rendering: pixelated;
-            image-rendering: -moz-crisp-edges;
-            image-rendering: crisp-edges;
         }
         
         .controls {
@@ -258,6 +255,8 @@
             justify-content: space-around;
             align-items: center;
             padding: 0 10px;
+            position: relative;
+            z-index: 1;
         }
         
         .control-btn {

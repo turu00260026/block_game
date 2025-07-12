@@ -19,9 +19,6 @@ class TetrisGame {
         this.canvas.width = this.COLS * this.BLOCK_SIZE;
         this.canvas.height = this.ROWS * this.BLOCK_SIZE;
         
-        // ピクセルアート風の設定
-        this.ctx.imageSmoothingEnabled = false;
-        
         this.board = this.createBoard();
         this.score = 0;
         this.lines = 0;
