@@ -156,8 +156,8 @@ class TetrisGame {
                 // 他のタッチ操作と区別するため、短時間のタッチのみ一時停止
                 this.pauseTouchTimer = setTimeout(() => {
                     this.togglePause();
-                }, 200);
-                e.preventDefault();
+                }, 300);
+                // e.preventDefault(); // コメントアウトして他のタッチ操作を阻害しないように
             }
         });
         
@@ -540,22 +540,33 @@ class TetrisGame {
         });
         
         // タッチコントロール
-        document.getElementById('leftBtn').addEventListener('touchstart', () => {
+        document.getElementById('leftBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (this.gameStarted && !this.isPaused) this.movePiece(-1, 0);
         });
-        document.getElementById('rightBtn').addEventListener('touchstart', () => {
+        document.getElementById('rightBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (this.gameStarted && !this.isPaused) this.movePiece(1, 0);
         });
-        document.getElementById('rotateBtn').addEventListener('touchstart', () => {
+        document.getElementById('rotateBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (this.gameStarted && !this.isPaused) this.rotate();
         });
-        document.getElementById('dropBtn').addEventListener('touchstart', () => {
+        document.getElementById('dropBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (this.gameStarted && !this.isPaused) this.softDropping = true;
         });
-        document.getElementById('dropBtn').addEventListener('touchend', () => {
+        document.getElementById('dropBtn').addEventListener('touchend', (e) => {
+            e.preventDefault();
             if (this.gameStarted && !this.isPaused) this.softDropping = false;
         });
-        document.getElementById('hardDropBtn').addEventListener('touchstart', () => {
+        document.getElementById('hardDropBtn').addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (this.gameStarted && !this.isPaused) this.hardDrop();
         });
         
@@ -566,7 +577,9 @@ class TetrisGame {
         document.getElementById('rightBtn').addEventListener('click', () => {
             if (this.gameStarted && !this.isPaused) this.movePiece(1, 0);
         });
-        document.getElementById('rotateBtn').addEventListener('click', () => {
+        document.getElementById('rotateBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
             if (this.gameStarted && !this.isPaused) this.rotate();
         });
         document.getElementById('dropBtn').addEventListener('mousedown', () => {
